@@ -1,0 +1,12 @@
+.header-element{
+    border-bottom: 1px solid black;
+    margin-bottom: 5px;
+    padding: 2px 15px;
+    cursor: pointer;
+    transition: all .4s ease;
+}
+
+.header-element:hover{
+    background-color: #a39d9d;
+    color: #fff;
+}
