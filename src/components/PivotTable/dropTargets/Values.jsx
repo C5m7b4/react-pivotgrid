@@ -3,7 +3,7 @@ import {
   arrAvg,
   arrCount,
   arrSum,
-} from "../../utils/arrayUtils";
+} from "../../../utils/arrayUtils";
 
 const Values = ({ values, setValues }) => {
   const handleSelectChange = (label, e) => {
@@ -37,10 +37,35 @@ const Values = ({ values, setValues }) => {
     newValues.splice(index, 1, newValue);
     setValues(newValues);
   };
+
+  const handleDrop = (e) => {
+    const fieldType = e.dataTransfer.getData("fieldType");
+    console.log("fieldType", fieldType);
+    const newValue = {
+      aggregator: "Sum",
+      label: fieldType,
+      fn: arrSum,
+    };
+    const newValues = [...values, newValue];
+    setValues(newValues);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDragLeave = () => {};
+
   return (
     <>
       <div>Values</div>
-      <div className="filters-container" id="filter-values">
+      <div
+        className="filters-container"
+        id="filter-values"
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        onDragLeave={handleDragLeave}
+      >
         {values.map((v, i) => (
           <div
             key={`value-${i}`}

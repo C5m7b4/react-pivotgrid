@@ -1,6 +1,8 @@
-import Values from "./Values";
+import Values from "./dropTargets/Values";
+import Fields from "./dropTargets/Fields";
+import Rows from "./dropTargets/Rows";
 
-const Configurator = ({ data, rows, filters, columns, values, setValues }) => {
+const Configurator = ({ data, rows, setRows, values, setValues }) => {
   return (
     <div className="configurator">
       <h3 style={{ margin: "10px 12px" }}>PivotTable Fields</h3>
@@ -9,12 +11,7 @@ const Configurator = ({ data, rows, filters, columns, values, setValues }) => {
           <input type="text" placeholder="search" />
         </div>
         <div className="fields-container" id="fields-container">
-          {Object.keys(data[0]).map((r, i) => (
-            <div key={`field-${i}`}>
-              <input type="checkbox" />
-              <label>{r}</label>
-            </div>
-          ))}
+          <Fields data={data} rows={rows} values={values} />
         </div>
         <div style={{ margin: "10px 12px" }}>
           <div style={{ margin: "10px 12px" }}>
@@ -29,12 +26,7 @@ const Configurator = ({ data, rows, filters, columns, values, setValues }) => {
             >
               <div>Filters</div>
               <div className="filters-container"></div>
-              <div>Rows</div>
-              <div className="filters-container" id="filtered-rows">
-                {rows.map((r, i) => (
-                  <div key={`row-${i}`}>{r}</div>
-                ))}
-              </div>
+              <Rows rows={rows} setRows={setRows} />
             </div>
             <div
               style={{
