@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { Box } from "../../utils/Box";
-import { unique } from "../../utils/unique";
-import { sort } from "../../utils/sort";
-import { grandTotalSum, grandTotalCount } from "../../utils/arrayUtils";
+
 import HeaderContext from "./HeaderContext";
 import UtilityContext from "./UtilityContext";
 import AliasModal from "./modals/AliasModal";
 import FormatterModal from "./modals/FormatterModal";
 import { formatCurrency } from "../../utils/formatters";
+import Thead from "./Thead";
+import Tbody from "./Tbody";
 
 const Pivot = ({ data, rows, setRows, values, setValues }) => {
   const [showContextMenu, setShowContextMenu] = useState(false);
@@ -69,8 +68,6 @@ const Pivot = ({ data, rows, setRows, values, setValues }) => {
     const pos = values.findIndex((v) => v.label === column);
     const newValues = [...values];
     let formatter = formatCurrency;
-    // *************************
-    // put switch statement here to add more formatters
     switch (formatterValue) {
       case "Currency":
         formatter = formatCurrency;
@@ -150,103 +147,14 @@ const Pivot = ({ data, rows, setRows, values, setValues }) => {
           // setShowUtilityContext(false);
         }}
       >
-        <thead>
-          <tr>
-            {rows.map((r, i) => (
-              <th
-                key={`th-${i}`}
-                onContextMenu={(e) => {
-                  e.preventDefault();
-                  setShowContextMenu(false);
-                }}
-              >
-                <span> {r.label}</span>
-                <span onClick={(e) => handleSortDirection(e, r)}>
-                  {r.direction == "asc" ? (
-                    <ion-icon name="arrow-round-down"></ion-icon>
-                  ) : (
-                    <ion-icon name="arrow-round-up"></ion-icon>
-                  )}
-                </span>
-              </th>
-            ))}
-            {values.map((v, idx) => (
-              <th
-                key={`th-v-${idx}`}
-                onContextMenu={(e) => {
-                  handleContextMenu(e, v.label);
-                }}
-              >
-                {v.alias ? v.alias : `${v.aggregator} of ${v.label}`}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, i) => {
-            console.log("rendering rows");
-            const filtered = Box(data)
-              .map((x) => unique(x, row.label))
-              .map((x) => sort(x, row.label))
-              .map((x) =>
-                x.filter((y) => {
-                  if (row.inclusions) {
-                    return row.inclusions.includes(y[row.label]);
-                  } else {
-                    return y[row.label];
-                  }
-                })
-              )
-              .fold((x) => x);
-
-            return filtered.map((record, idx) => {
-              return (
-                <tr key={`tr-td-${i}-${idx}`}>
-                  {Object.keys(record).map((k, index) => {
-                    if (k === row.label) {
-                      return <td key={`fd-r-${idx}-${index}`}>{record[k]}</td>;
-                    }
-                  })}
-                  {values.map((v, index) => {
-                    const sumOfCell = v.fn(
-                      data,
-                      row.label,
-                      record[row.label],
-                      v.label
-                    );
-                    return (
-                      <td key={`tr-td-${i}-${idx}-${index}`}>
-                        {v.formatter ? v.formatter(sumOfCell) : sumOfCell}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            });
-          })}
-          <tr style={{ borderTop: "2px solid black" }}>
-            <td>Grand Total</td>
-            {values.map((v, index) => {
-              let total = 0;
-              switch (v.aggregator) {
-                case "Count":
-                  total = grandTotalCount(data);
-                  break;
-                case "Sum":
-                  total = grandTotalSum(data, v.label);
-                  break;
-                default:
-                  total = grandTotalSum(data, v.label);
-                  break;
-              }
-              return (
-                <td key={`gt-${index}`} style={{ fontWeight: "bold" }}>
-                  {total}
-                </td>
-              );
-            })}
-          </tr>
-        </tbody>
+        <Thead
+          rows={rows}
+          setShowContextMenu={setShowContextMenu}
+          handleSortDirection={handleSortDirection}
+          values={values}
+          handleContextMenu={handleContextMenu}
+        />
+        <Tbody rows={rows} data={data} values={values} />
       </table>
     </>
   );
