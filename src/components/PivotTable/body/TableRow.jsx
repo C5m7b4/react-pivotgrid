@@ -4,7 +4,7 @@ import { unique } from "../../../utils/unique";
 // import { sort } from "../../../utils/sort";
 
 const TableRow = ({ i, idx, record, values, data, row, rows }) => {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
   const [subrows, setSubrows] = useState([]);
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const TableRow = ({ i, idx, record, values, data, row, rows }) => {
             <tr key={`sr-${i}-${idx}-${index}`}>
               <td></td>
               {Object.keys(sr).map((k, index) => {
-                if (k === rows[i + 1].label) {
+                if (k === rows[i + 1]?.label) {
                   return (
                     <td key={`sr-r-${idx}-${index}`}>
                       {`${sr[k]} - ${sr["Order ID"]}`}

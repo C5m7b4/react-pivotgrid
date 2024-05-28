@@ -7,8 +7,12 @@ const Fields = ({ data, rows, values }) => {
     const valueFields = values.map((v) => v.label);
     setUsedFields([...rows, ...valueFields]);
   }, [rows, values]);
+
   const handleDragStart = (e, fieldType) => {
     e.dataTransfer.setData("fieldType", fieldType);
+    e.dataTransfer.effectAllowed = "copyMove";
+    e.target.style.border = "1px solid #009879";
+    e.target.style.opacity = 0.8;
   };
 
   const handleCheck = () => {};
@@ -17,6 +21,7 @@ const Fields = ({ data, rows, values }) => {
     <>
       {Object.keys(data[0]).map((r, i) => (
         <div
+          className="draggable-item"
           key={`field-${i}`}
           draggable
           onDragStart={(e) => handleDragStart(e, r)}
@@ -27,7 +32,7 @@ const Fields = ({ data, rows, values }) => {
             checked={usedFields.includes(r) ? "checked" : ""}
             onChange={handleCheck}
           />
-          <label>{r}</label>
+          <label className="draggable-item">{r}</label>
         </div>
       ))}
     </>
