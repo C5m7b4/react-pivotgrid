@@ -3,12 +3,10 @@ import NormalTable from "./NormalTable";
 import Pivot from "./Pivot";
 import Configurator from "./Configurator";
 import { data } from "../../data";
-import { arrAvg, arrCount, arrSum } from "../../utils/arrayUtils";
-import { formatCurrency } from "../../utils/formatters";
 import "./pivotTable.css";
 
 const PivotTable = () => {
-  const [usedField, setUsedfield] = useState([]);
+  // const [usedField, setUsedfield] = useState([]);
   // const [rows, setRows] = useState(["Customer"]);
   const [rows, setRows] = useState([]);
   const [filters, setFilters] = useState([]);
@@ -53,6 +51,7 @@ const PivotTable = () => {
           <Pivot
             data={data}
             rows={rows}
+            setRows={setRows}
             values={values}
             setValues={setValues}
           />

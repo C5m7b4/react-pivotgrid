@@ -1,7 +1,11 @@
 const Rows = ({ rows, setRows }) => {
   const handleDrop = (e) => {
     const fieldType = e.dataTransfer.getData("fieldType");
-    const newRows = [...rows, fieldType];
+    const newRow = {
+      label: fieldType,
+      direction: "asc",
+    };
+    const newRows = [...rows, newRow];
     setRows(newRows);
   };
 
@@ -21,7 +25,7 @@ const Rows = ({ rows, setRows }) => {
         onDragLeave={handleDragLeave}
       >
         {rows.map((r, i) => (
-          <div key={`row-${i}`}>{r}</div>
+          <div key={`row-${i}`}>{r.label}</div>
         ))}
       </div>
     </>
