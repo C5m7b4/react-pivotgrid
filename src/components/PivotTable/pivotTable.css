@@ -84,3 +84,7 @@ table tbody tr.active-row{
     min-height: 100px;
     background-color: white;
 }
+
+.sub-row-indicator{
+    cursor: pointer;
+}
