@@ -1,5 +1,6 @@
 const Button = ({ type, label, onClick }) => {
   let bgColor = "#0d6efd";
+  let color = "#000";
 
   switch (type) {
     case "normal":
@@ -15,7 +16,8 @@ const Button = ({ type, label, onClick }) => {
       bgColor = "#0dcaf0";
       break;
     default:
-      bgColor = "#0d6efd";
+      bgColor = "#009879";
+      color = "#fff";
       break;
   }
 
@@ -29,6 +31,7 @@ const Button = ({ type, label, onClick }) => {
     outline: "none",
     marginRight: "5px",
     cursor: "pointer",
+    color,
   };
 
   return (
