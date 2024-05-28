@@ -10,3 +10,18 @@
     background-color: #a39d9d;
     color: #fff;
 }
+
+.field-list-utility{
+    width: 80%;
+    margin: 0 auto;
+    background-color: #eee;
+    margin-bottom: 10px;
+    padding: 8px 15px;
+}
+
+.utility-buttons{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

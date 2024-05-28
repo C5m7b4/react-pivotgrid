@@ -1,6 +1,12 @@
 import "./HeaderContext.css";
 
-const HeaderContext = ({ top, left, column, handleAliasClick }) => {
+const HeaderContext = ({
+  top,
+  left,
+  column,
+  handleAliasClick,
+  handleFormatterClick,
+}) => {
   const style = {
     border: "1px solid black",
     position: "absolute",
@@ -16,7 +22,12 @@ const HeaderContext = ({ top, left, column, handleAliasClick }) => {
       <div className="header-element" onClick={() => handleAliasClick(column)}>
         Create alias
       </div>
-      <div className="header-element">Add Formatter</div>
+      <div
+        className="header-element"
+        onClick={() => handleFormatterClick(column)}
+      >
+        Add Formatter
+      </div>
     </div>
   );
 };
